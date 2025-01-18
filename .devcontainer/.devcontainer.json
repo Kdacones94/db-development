@@ -1,0 +1,30 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.10
+
+# Install SQLite and required extensions
+RUN apt-get update && \
+    apt-get install -y sqlite3 libsqlite3-dev bash nano openssh-server && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Configure SSH
+RUN mkdir /var/run/sshd
+RUN echo 'root:root' | chpasswd
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/Port 22/Port 2222/' /etc/ssh/sshd_config
+
+# Expose SSH port
+EXPOSE 2222
+
+# Add the post-start script
+COPY .devcontainer/post-start.sh /post-start.sh
+RUN chmod +x /post-start.sh
+
+# Copy the application code
+COPY . /app
+
+# Run the post-start script
+CMD ["/post-start.sh"]
