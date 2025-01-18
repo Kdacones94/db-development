@@ -1,0 +1,16 @@
+{
+    "name": "SQLite Development Container",
+    "dockerFile": "Dockerfile",
+    "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "ms-python.python"
+    ],
+    "postCreateCommand": "pip install -r requirements.txt",
+    "remoteUser": "root",
+    "forwardPorts": [
+        2222
+    ]
+}
