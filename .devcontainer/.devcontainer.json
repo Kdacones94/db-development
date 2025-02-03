@@ -1,15 +1,20 @@
 {
     "name": "SQLite Development Container",
     "dockerFile": "Dockerfile",
-    "workspaceMount": "source=${localWorkspaceFolder}/project,target=/workspace,type=bind,consistency=cached", "workspaceFolder": "/workspace"
-    "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
-    "settings": {
+    "workspaceMount": "source=${localWorkspaceFolder}/project,target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace",
+    "runArgs": [
+        "--cap-add=SYS_PTRACE",
+        "--security-opt",
+        "seccomp=unconfined"
+    ],
+    /* "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
     },
     "extensions": [
         "ms-python.python"
-    ],
-    "postCreateCommand": "pip install -r requirements.txt",
+    ], */
+    "postCreateCommand": "pip install -r requirements.txt && chmod +x post-start.sh",
     "remoteUser": "root",
     "forwardPorts": [
         2222

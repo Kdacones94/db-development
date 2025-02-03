@@ -3,7 +3,7 @@ FROM python:3.10
 
 # Install SQLite and required extensions
 RUN apt-get update && \
-    apt-get install -y sqlite3 libsqlite3-dev bash nano openssh-server && \
+    apt-get install -y sqlite3 libsqlite3-dev bash nano openssh-server fastapi sqlmodel sqlalchemy && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
